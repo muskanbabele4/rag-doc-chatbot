@@ -7,7 +7,7 @@ langchain-anthropic==0.3.0
 langchain-google-genai==2.0.5
 langchain-chroma==0.1.4
 chromadb==0.5.18
-sqlalchemy==2.0.36
+sqlalchemy==2.0.35
 python-dotenv==1.0.1
 pypdf==5.1.0
 docx2txt==0.8
