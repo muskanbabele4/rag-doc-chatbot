@@ -5,6 +5,7 @@ from langchain_community.document_loaders import PyPDFLoader, TextLoader, Docx2t
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
 from app.config import settings
 
@@ -16,6 +17,11 @@ LOADER_MAP = {
 
 
 def get_embeddings():
+    if settings.LLM_PROVIDER == "google":
+        return GoogleGenerativeAIEmbeddings(
+            model=settings.EMBEDDING_MODEL,
+            google_api_key=settings.GOOGLE_API_KEY,
+        )
     return OpenAIEmbeddings(model=settings.EMBEDDING_MODEL, api_key=settings.OPENAI_API_KEY)
 
 
