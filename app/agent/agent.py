@@ -3,6 +3,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
+from langchain_google_genai import ChatGoogleGenerativeAI
 from sqlalchemy.orm import Session
 
 from app.config import settings
@@ -13,9 +14,15 @@ from app.db.models import Document
 
 def get_llm():
     """Swappable LLM provider — matches JD requirement of integrating
-    OpenAI / Azure OpenAI / Anthropic / open-source models."""
+    OpenAI / Azure OpenAI / Anthropic / Google (Gemini, free tier) / open-source models."""
     if settings.LLM_PROVIDER == "anthropic":
         return ChatAnthropic(model=settings.LLM_MODEL, api_key=settings.ANTHROPIC_API_KEY)
+    if settings.LLM_PROVIDER == "google":
+        return ChatGoogleGenerativeAI(
+            model=settings.LLM_MODEL,
+            google_api_key=settings.GOOGLE_API_KEY,
+            temperature=0,
+        )
     return ChatOpenAI(model=settings.LLM_MODEL, api_key=settings.OPENAI_API_KEY, temperature=0)
 
 
