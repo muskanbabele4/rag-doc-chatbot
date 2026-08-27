@@ -5,14 +5,18 @@ load_dotenv()
 
 
 class Settings:
-    # LLM Provider: "openai" or "anthropic" (matches JD: OpenAI / Azure OpenAI / Anthropic / open-source)
-    LLM_PROVIDER: str = os.getenv("LLM_PROVIDER", "openai")
+    # LLM Provider: "openai", "anthropic", or "google" (Gemini - free tier available)
+    LLM_PROVIDER: str = os.getenv("LLM_PROVIDER", "google")
 
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
     ANTHROPIC_API_KEY: str = os.getenv("ANTHROPIC_API_KEY", "")
+    GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "")
 
-    LLM_MODEL: str = os.getenv("LLM_MODEL", "gpt-4o-mini")
-    EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
+    # Defaults are set for the Google provider since that's free.
+    # If you switch LLM_PROVIDER to "openai" or "anthropic", also set
+    # LLM_MODEL / EMBEDDING_MODEL env vars to the right model names.
+    LLM_MODEL: str = os.getenv("LLM_MODEL", "gemini-1.5-flash")
+    EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "models/text-embedding-004")
 
     CHROMA_PERSIST_DIR: str = os.getenv("CHROMA_PERSIST_DIR", "./chroma_db")
     SQLITE_DB_PATH: str = os.getenv("SQLITE_DB_PATH", "./app.db")
